@@ -21,8 +21,6 @@
     <script src="https://raw.githubusercontent.com/chelms21/test-picture-thing/refs/heads/main/fumsv2.min.js"></script>
     <script>
       const API_KEY = `J0lESLek4jEmX1m3vsE-o`; // Fill in with your own key.
-      const verse = document.querySelector(`#verse-content`);
-      const verseRef = document.querySelector(`#verse`);
       const BIBLE_ID = `61fd76eafa1577c2-02`;
       const VERSES = [
   // --- Genesis to Deuteronomy (Adding GEN.2.9, LEV.16.29, DEU.30.15) ---
@@ -130,32 +128,23 @@
   "REV.1.7", "REV.1.8", "REV.2.10", "REV.3.20", "REV.5.12", "REV.7.17", "REV.20.15", "REV.21.3-4",
   "REV.22.12-13", "REV.22.20", "REV.22.21"
 ];
-      const verseIndex = Math.floor(Math.random() * VERSES.length);
-      const verseID = VERSES[verseIndex];
-      function getResults(verseID) {
-        return new Promise((resolve, reject) => {
-          const xhr = new XMLHttpRequest();
-          xhr.withCredentials = false;
-          xhr.addEventListener(`readystatechange`, function () {
-            if (this.readyState === this.DONE) {
-              const { data, meta } = JSON.parse(this.responseText);
-              _BAPI.t(meta.fumsId);
-              resolve(data);
-            }
-          });
-          xhr.open(
-            `GET`,
-            `https://api.scripture.api.bible/v1/bibles/${BIBLE_ID}/search?query=${verseID}`
-          );
-          xhr.setRequestHeader(`api-key`, API_KEY);
-          xhr.onerror = () => reject(xhr.statusText);
-          xhr.send();
-        });
+      const verseRef = document.getElementById("verse");
+      const verseDiv = document.getElementById("verse-content");
+
+      const verseID = VERSES[Math.floor(Math.random() * VERSES.length)];
+
+      async function getVerse(verseID) {
+        const res = await fetch(
+          `https://api.scripture.api.bible/v1/bibles/${BIBLE_ID}/passages/${verseID}`,
+          { headers: { "api-key": API_KEY } }
+        );
+        const json = await res.json();
+        return json.data;
       }
-      getResults(verseID).then((data) => {
-        const passage = data.passages[0];
-        verseRef.innerHTML = `<span><i>${passage.reference}</i></span>`;
-        verse.innerHTML = `<div class="text eb-container">${passage.content}</div>`;
+
+      getVerse(verseID).then((data) => {
+        verseRef.innerHTML = `<i>${data.reference}</i>`;
+        verseDiv.innerHTML = data.content;
       });
     </script>
   </body>
