@@ -23,31 +23,36 @@
       font-size: 2.2rem;
       margin-bottom: 1rem;
       color: #1a3c7a;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+
+    #verse-container {
+      max-width: 700px;
+      background: rgba(255, 255, 255, 0.85); /* semi-transparent card */
+      padding: 25px 35px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      margin-bottom: 20px;
+      text-align: center;
     }
 
     #verse {
       font-size: 1.5rem;
       line-height: 1.6;
-      max-width: 700px;
-      background: rgba(255,255,255,0.7);
-      padding: 20px 30px;
-      border-radius: 12px;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
       margin-bottom: 15px;
-      transition: all 0.5s ease-in-out;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeIn 1s forwards;
     }
 
     #reference {
       font-style: italic;
-      color: #555;
+      color: #333;
       font-size: 1.1rem;
+    }
+
+    /* Fade-in animation */
+    #verse-container {
       opacity: 0;
       transform: translateY(20px);
       animation: fadeIn 1s forwards;
-      animation-delay: 0.5s;
     }
 
     @keyframes fadeIn {
@@ -59,12 +64,14 @@
   </style>
 </head>
 <body>
-  <div id="verse">Loading verse...</div>
-  <div id="reference"></div>
+  <div id="verse-container">
+    <div id="verse">Loading verse...</div>
+    <div id="reference"></div>
+  </div>
 
   <script src="verses.js"></script>
   <script>
-    // Function to generate a random hex color
+    // Generate random hex color
     function getRandomColor() {
       const letters = '0123456789ABCDEF';
       let color = '#';
@@ -74,13 +81,14 @@
       return color;
     }
 
-    // Set a random gradient background
+    // Set random background gradient
     function setRandomGradient() {
       const color1 = getRandomColor();
       const color2 = getRandomColor();
       document.body.style.background = `linear-gradient(135deg, ${color1}, ${color2})`;
     }
 
+    // Show random verse
     function showVerse() {
       if (!VERSES || VERSES.length === 0) {
         document.getElementById("verse").innerText = "No verses loaded.";
@@ -91,7 +99,6 @@
       document.getElementById("reference").innerText = random.ref;
     }
 
-    // Run on page load
     window.onload = function() {
       setRandomGradient();
       showVerse();
