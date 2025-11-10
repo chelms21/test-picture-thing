@@ -1,20 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Random NLT Verse</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Random NLT Bible Verse</title>
+  <style>
+    body {
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      color: #222;
+      text-align: center;
+      padding: 1em;
+      transition: background 1s ease;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 1rem;
+      color: #1a3c7a;
+    }
+
+    #verse {
+      font-size: 1.5rem;
+      line-height: 1.6;
+      max-width: 700px;
+      background: rgba(255,255,255,0.7);
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+      margin-bottom: 15px;
+      transition: all 0.5s ease-in-out;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 1s forwards;
+    }
+
+    #reference {
+      font-style: italic;
+      color: #555;
+      font-size: 1.1rem;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn 1s forwards;
+      animation-delay: 0.5s;
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Random Bible Verse</h1>
-  <div id="verse">Loading...</div>
+  <h1>🌿 Random NLT Bible Verse 🌿</h1>
+  <div id="verse">Loading verse...</div>
   <div id="reference"></div>
-  <button onclick="showVerse()">New Verse</button>
 
-  <!-- Load verses.js -->
   <script src="verses.js"></script>
-
   <script>
+    // Function to generate a random hex color
+    function getRandomColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random() * 16)];
+      }
+      return color;
+    }
+
+    // Set a random gradient background
+    function setRandomGradient() {
+      const color1 = getRandomColor();
+      const color2 = getRandomColor();
+      document.body.style.background = `linear-gradient(135deg, ${color1}, ${color2})`;
+    }
+
     function showVerse() {
       if (!VERSES || VERSES.length === 0) {
         document.getElementById("verse").innerText = "No verses loaded.";
@@ -25,8 +92,11 @@
       document.getElementById("reference").innerText = random.ref;
     }
 
-    window.onload = showVerse;
+    // Run on page load
+    window.onload = function() {
+      setRandomGradient();
+      showVerse();
+    };
   </script>
 </body>
 </html>
-
