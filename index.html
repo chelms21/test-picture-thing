@@ -1,72 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Random NLT Bible Verse</title>
-  <style>
-    body {
-      font-family: "Segoe UI", sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      background: linear-gradient(135deg, #f3f7ff, #c7d7ff);
-      color: #222;
-      text-align: center;
-      padding: 1em;
-    }
-
-    h1 {
-      margin-bottom: 1rem;
-    }
-
-    #verse {
-      font-size: 1.4rem;
-      margin: 20px;
-      max-width: 700px;
-    }
-
-    #reference {
-      font-style: italic;
-      color: #555;
-      margin-top: 10px;
-    }
-
-    button {
-      margin-top: 20px;
-      padding: 10px 20px;
-      background-color: #3a6ff7;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-
-    button:hover {
-      background-color: #2e56c4;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random NLT Verse</title>
 </head>
 <body>
-  <h1>🌿 Random NLT Bible Verse 🌿</h1>
-  <div id="verse">Loading verse...</div>
+  <h1>Random Bible Verse</h1>
+  <div id="verse">Loading...</div>
   <div id="reference"></div>
-  <button onclick="showVerse()">🔄 New Verse</button>
+  <button onclick="showVerse()">New Verse</button>
 
-  <!-- Load verses -->
+  <!-- Load verses.js -->
   <script src="verses.js"></script>
 
   <script>
     function showVerse() {
-      if (!window.VERSES || VERSES.length === 0) {
+      if (!VERSES || VERSES.length === 0) {
         document.getElementById("verse").innerText = "No verses loaded.";
         return;
       }
-
       const random = VERSES[Math.floor(Math.random() * VERSES.length)];
       document.getElementById("verse").innerText = random.text;
       document.getElementById("reference").innerText = random.ref;
@@ -76,3 +29,4 @@
   </script>
 </body>
 </html>
+
