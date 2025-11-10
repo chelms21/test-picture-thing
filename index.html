@@ -1,151 +1,78 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
-    <title>Bible API Example Application</title>
-  </head>
-  <body>
-    <div class="subheader">
-      <div class="container flex">
-        <div class="subheadings">
-          <h2>Verse of the Day: </h2>
-          <h3 id="viewing"><span id="verse"></span></h3>
-        </div>
-      </div>
-    </div>
-    <main class="container">
-      <div id="verse-content" class="verse-container"></div>
-    </main>
-    <script src="https://raw.githubusercontent.com/chelms21/test-picture-thing/refs/heads/main/fumsv2.min.js"></script>
-    <script>
-      const API_KEY = `J0lESLek4jEmX1m3vsE-o`; // Fill in with your own key.
-      const BIBLE_ID = `61fd76eafa1577c2-02`;
-      const VERSES = [
-  // --- Genesis to Deuteronomy (Adding GEN.2.9, LEV.16.29, DEU.30.15) ---
-  "GEN.1.1", "GEN.1.27", "GEN.2.7", "GEN.2.9", "GEN.2.18", "GEN.2.24", "GEN.3.15", "GEN.4.7", "GEN.6.8", "GEN.11.4", "GEN.12.2-3",
-  "GEN.15.6", "GEN.18.14", "GEN.22.8", "GEN.22.14", "GEN.28.15", "GEN.32.26", "GEN.50.20",
-  "EXO.3.2", "EXO.3.14", "EXO.6.7", "EXO.12.13", "EXO.14.14", "EXO.15.2", "EXO.16.4", "EXO.19.5-6", "EXO.20.1-17",
-  "EXO.20.12", "EXO.33.14", "EXO.34.6-7",
-  "LEV.11.44", "LEV.16.29", "LEV.17.11", "LEV.19.2", "LEV.19.18", "LEV.20.7",
-  "NUM.6.24-26", "NUM.11.1", "NUM.14.24", "NUM.23.19",
-  "DEU.4.29", "DEU.6.4", "DEU.6.5", "DEU.7.9", "DEU.8.3", "DEU.10.12", "DEU.18.15", "DEU.28.12",
-  "DEU.30.15", "DEU.30.19", "DEU.31.6", "DEU.34.10",
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Random NLT Bible Verse</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #f3f7ff, #c7d7ff);
+      color: #222;
+      text-align: center;
+      padding: 1em;
+    }
 
-  // --- Joshua to Esther (Adding 1SA.3.10, 2SA.1.26, 2KI.6.16) ---
-  "JOS.1.8", "JOS.1.9", "JOS.2.18", "JOS.6.20", "JOS.24.15",
-  "JDG.6.12", "JDG.7.2", "JDG.11.30",
-  "RUT.1.16", "RUT.2.12", "RUT.3.11",
-  "1SA.1.20", "1SA.3.10", "1SA.12.24", "1SA.15.22", "1SA.16.7", "1SA.17.45",
-  "2SA.1.26", "2SA.6.14", "2SA.7.28", "2SA.12.13", "2SA.22.31", "2SA.22.33",
-  "1KI.3.9", "1KI.8.61", "1KI.19.12",
-  "2KI.1.10", "2KI.5.1", "2KI.6.16", "2KI.20.5",
-  "1CH.16.11", "1CH.28.9",
-  "2CH.7.14", "2CH.16.9", "2CH.30.9",
-  "EZR.7.10",
-  "NEH.4.14", "NEH.8.10",
-  "EST.4.14", "EST.7.3",
+    h1 {
+      margin-bottom: 1rem;
+    }
 
-  // --- Job to Song of Songs (Adding PSA.39.4, PSA.127.1, PRO.29.18, ECC.7.2) ---
-  "JOB.1.21", "JOB.5.17", "JOB.19.25", "JOB.23.10", "JOB.28.28", "JOB.38.4", "JOB.42.2",
-  "PSA.1.1-2", "PSA.4.8", "PSA.9.9", "PSA.14.1", "PSA.16.8", "PSA.18.2", "PSA.19.1", "PSA.19.14", "PSA.23",
-  "PSA.24.1", "PSA.27.1", "PSA.27.4", "PSA.28.7", "PSA.30.5", "PSA.33.12", "PSA.34.8", "PSA.34.18", "PSA.37.3",
-  "PSA.37.4-5", "PSA.39.4", "PSA.46.1", "PSA.46.10", "PSA.51.10", "PSA.55.22", "PSA.56.3", "PSA.62.1-2", "PSA.66.18",
-  "PSA.73.26", "PSA.84.10", "PSA.90.1-2", "PSA.90.12", "PSA.91.1-2", "PSA.92.1-2", "PSA.95.6", "PSA.100.1-5",
-  "PSA.103.1-5", "PSA.107.1", "PSA.113.3", "PSA.118.6", "PSA.118.24", "PSA.119.11", "PSA.119.105",
-  "PSA.121.1-2", "PSA.126.5-6", "PSA.127.1", "PSA.130.3-4", "PSA.133.1", "PSA.136.1", "PSA.139.1-3", "PSA.139.13-14",
-  "PSA.145.3", "PSA.150.6",
-  "PRO.1.7", "PRO.3.5-6", "PRO.4.23", "PRO.10.12", "PRO.11.25", "PRO.12.25", "PRO.14.34", "PRO.15.1",
-  "PRO.15.3", "PRO.16.3", "PRO.16.9", "PRO.17.17", "PRO.18.10", "PRO.18.21", "PRO.22.6", "PRO.27.17",
-  "PRO.29.18", "PRO.29.25", "PRO.31.10", "PRO.31.25",
-  "ECC.3.1-8", "ECC.4.9-12", "ECC.7.2", "ECC.9.11", "ECC.12.13", "ECC.12.14",
-  "SON.2.4", "SON.8.6",
+    #verse {
+      font-size: 1.4rem;
+      margin: 20px;
+      max-width: 700px;
+    }
 
-  // --- Isaiah to Malachi (Adding ISA.54.17, ISA.66.1, JER.8.22, EZE.1.28, MIC.4.3) ---
-  "ISA.1.18", "ISA.2.4", "ISA.6.3", "ISA.6.8", "ISA.7.14", "ISA.9.6", "ISA.12.2", "ISA.26.3", "ISA.30.21",
-  "ISA.40.8", "ISA.40.28", "ISA.40.31", "ISA.41.10", "ISA.43.1", "ISA.43.2", "ISA.43.18-19", "ISA.44.6",
-  "ISA.53.5", "ISA.53.6", "ISA.54.17", "ISA.55.8-9", "ISA.58.11", "ISA.60.1", "ISA.61.1", "ISA.66.1",
-  "JER.1.5", "JER.8.22", "JER.17.7", "JER.17.9", "JER.20.9", "JER.29.11", "JER.29.13", "JER.31.3", "JER.33.3",
-  "LAM.3.22-23", "LAM.3.25-26", "LAM.5.19",
-  "EZE.1.28", "EZE.3.17", "EZE.11.19", "EZE.36.26",
-  "DAN.3.17-18", "DAN.6.23", "DAN.12.3",
-  "HOS.6.6",
-  "JOE.2.28",
-  "AMO.5.24",
-  "OBA.1.15",
-  "JON.2.2", "JON.4.2",
-  "MIC.4.3", "MIC.5.2", "MIC.6.8", "MIC.7.7",
-  "NAH.1.7",
-  "HAB.2.4", "HAB.3.18-19",
-  "ZEP.3.17",
-  "HAG.2.9",
-  "ZEC.4.6", "ZEC.9.9",
-  "MAL.3.10", "MAL.3.17", "MAL.4.2",
+    #reference {
+      font-style: italic;
+      color: #555;
+      margin-top: 10px;
+    }
 
-  // --- Matthew to John (Adding MAT.10.28, LUK.16.10, JHN.5.24, JHN.7.38) ---
-  "MAT.5.1-12", "MAT.5.3-12", "MAT.5.14-16", "MAT.5.44", "MAT.6.9-13", "MAT.6.24", "MAT.6.33", "MAT.7.7-8",
-  "MAT.7.12", "MAT.10.28", "MAT.11.28-30", "MAT.14.19", "MAT.16.26", "MAT.18.3", "MAT.18.20", "MAT.19.26",
-  "MAT.22.37-40", "MAT.24.35", "MAT.25.40", "MAT.28.6", "MAT.28.19-20",
-  "MAR.1.17", "MAR.8.34", "MAR.9.23", "MAR.10.45", "MAR.11.24", "MAR.12.30-31", "MAR.16.15",
-  "LUK.1.37", "LUK.6.31", "LUK.9.23", "LUK.10.27", "LUK.11.2", "LUK.12.48", "LUK.15.7", "LUK.16.10", "LUK.19.10",
-  "LUK.23.34",
-  "JHN.1.1", "JHN.1.12", "JHN.1.14", "JHN.1.29", "JHN.3.3", "JHN.3.16", "JHN.3.17", "JHN.4.24", "JHN.5.24", "JHN.6.35",
-  "JHN.7.38", "JHN.8.12", "JHN.10.10", "JHN.10.28", "JHN.11.25", "JHN.13.34-35", "JHN.14.1-3", "JHN.14.6",
-  "JHN.14.15", "JHN.14.27", "JHN.15.5", "JHN.15.13", "JHN.16.33", "JHN.20.29",
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #3a6ff7;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
 
-  // --- Acts to Philemon (Adding ACT.17.28, ROM.1.20, EPH.5.25, COL.1.17) ---
-  "ACT.1.8", "ACT.2.21", "ACT.2.42", "ACT.4.12", "ACT.16.31", "ACT.17.11", "ACT.17.28", "ACT.20.24", "ACT.20.35",
-  "ROM.1.16", "ROM.1.20", "ROM.3.23", "ROM.3.24", "ROM.5.1", "ROM.5.5", "ROM.5.8", "ROM.6.4", "ROM.6.23", "ROM.8.1",
-  "ROM.8.18", "ROM.8.28", "ROM.8.31", "ROM.8.37-39", "ROM.10.9-10", "ROM.10.13", "ROM.10.17", "ROM.12.1-2",
-  "ROM.12.10", "ROM.13.10", "ROM.15.4", "ROM.15.13",
-  "1COR.6.19-20", "1COR.10.13", "1COR.13.4-8", "1COR.15.33", "1COR.15.57", "1COR.16.13",
-  "2COR.3.17", "2COR.4.16-18", "2COR.5.7", "2COR.5.17", "2COR.5.20", "2COR.5.21", "2COR.6.14",
-  "2COR.9.7", "2COR.12.9",
-  "GAL.2.20", "GAL.3.28", "GAL.5.1", "GAL.5.22-23", "GAL.6.7", "GAL.6.9", "GAL.6.10",
-  "EPH.2.8-9", "EPH.2.10", "EPH.3.20", "EPH.4.2", "EPH.4.32", "EPH.5.18", "EPH.5.25", "EPH.6.1-3",
-  "EPH.6.10-18",
-  "PHP.1.6", "PHP.2.3-4", "PHP.2.5", "PHP.2.14-15", "PHP.3.13-14", "PHP.4.4", "PHP.4.6-7",
-  "PHP.4.8", "PHP.4.13", "PHP.4.19",
-  "COL.1.17", "COL.2.6-7", "COL.3.12", "COL.3.15-17", "COL.3.23",
-  "1TH.4.16-17", "1TH.5.16-18", "1TH.5.23-24",
-  "2TH.3.3",
-  "1TI.2.5", "1TI.4.12", "1TI.6.10", "1TI.6.12",
-  "2TI.1.7", "2TI.2.15", "2TI.3.16-17", "2TI.4.7-8",
-  "TIT.3.5",
-  "PHM.1.6",
+    button:hover {
+      background-color: #2e56c4;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌿 Random NLT Bible Verse 🌿</h1>
+  <div id="verse">Loading verse...</div>
+  <div id="reference"></div>
+  <button onclick="showVerse()">🔄 New Verse</button>
 
-  // --- Hebrews to Revelation (Adding HEB.9.27, JAM.3.2, 1PE.3.18, 1JHN.2.1) ---
-  "HEB.1.3", "HEB.4.12", "HEB.4.16", "HEB.9.27", "HEB.10.23", "HEB.10.24-25", "HEB.11.1", "HEB.11.6", "HEB.12.1-2",
-  "HEB.12.14", "HEB.13.5", "HEB.13.8", "HEB.13.14",
-  "JAM.1.2-4", "JAM.1.5", "JAM.1.17", "JAM.1.19", "JAM.2.17", "JAM.3.2", "JAM.4.7-8", "JAM.4.10", "JAM.5.16",
-  "1PE.1.3", "1PE.1.7", "1PE.2.9", "1PE.3.15", "1PE.3.18", "1PE.4.8", "1PE.5.6-7",
-  "2PE.1.3", "2PE.3.9",
-  "1JHN.1.9", "1JHN.2.1", "1JHN.3.1", "1JHN.3.16", "1JHN.4.4", "1JHN.4.7-8", "1JHN.4.19", "1JHN.5.4",
-  "2JHN.1.6",
-  "3JHN.1.4",
-  "JUD.1.20-21", "JUD.1.24",
-  "REV.1.7", "REV.1.8", "REV.2.10", "REV.3.20", "REV.5.12", "REV.7.17", "REV.20.15", "REV.21.3-4",
-  "REV.22.12-13", "REV.22.20", "REV.22.21"
-];
-      const verseRef = document.getElementById("verse");
-      const verseDiv = document.getElementById("verse-content");
+  <!-- Load verses -->
+  <script src="verses.js"></script>
 
-      const verseID = VERSES[Math.floor(Math.random() * VERSES.length)];
-
-      async function getVerse(verseID) {
-        const res = await fetch(
-          `https://api.scripture.api.bible/v1/bibles/${BIBLE_ID}/passages/${verseID}`,
-          { headers: { "api-key": API_KEY } }
-        );
-        const json = await res.json();
-        return json.data;
+  <script>
+    function showVerse() {
+      if (!window.VERSES || VERSES.length === 0) {
+        document.getElementById("verse").innerText = "No verses loaded.";
+        return;
       }
 
-      getVerse(verseID).then((data) => {
-        verseRef.innerHTML = `<i>${data.reference}</i>`;
-        verseDiv.innerHTML = data.content;
-      });
-    </script>
-  </body>
+      const random = VERSES[Math.floor(Math.random() * VERSES.length)];
+      document.getElementById("verse").innerText = random.text;
+      document.getElementById("reference").innerText = random.ref;
+    }
+
+    window.onload = showVerse;
+  </script>
+</body>
 </html>
