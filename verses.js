@@ -267,4 +267,125 @@ const VERSES = [
 { ref: "1 Peter 4:8", text: "Most important of all, continue to show deep love for each other, for love covers a multitude of sins." },
 { ref: "Revelation 1:8", text: "“I am the Alpha and the Omega—the beginning and the end,” says the Lord God. “I am the one who is, who always was, and who is still to come—the Almighty.”" },
 { ref: "Revelation 22:20", text: "He who is the faithful witness says, “Yes, I am coming soon!” Amen! Come, Lord Jesus!" },
+  { ref: "Genesis 9:13", text: "I have placed my rainbow in the clouds. It is the sign of my covenant with you and with all the earth." },
+  { ref: "Genesis 28:15", text: "What’s more, I am with you, and I will protect you wherever you go." },
+  { ref: "Exodus 14:13", text: "Don’t be afraid. Just stand still and watch the Lord rescue you today." },
+  { ref: "Leviticus 20:26", text: "You must be holy because I, the Lord, am holy. I have set you apart from all other people to be my very own." },
+  { ref: "Deuteronomy 4:7", text: "For what great nation has a god as near to them as the Lord our God is near to us whenever we call on him?" },
+  { ref: "Deuteronomy 8:3", text: "People do not live by bread alone; rather, we live by every word that comes from the mouth of the Lord." },
+  { ref: "Deuteronomy 20:4", text: "For the Lord your God is the one who goes with you to fight for you against your enemies to give you victory." },
+
+  { ref: "Joshua 23:14", text: "Deep in your hearts you know that every promise of the Lord your God has come true. Not a single one has failed!" },
+  { ref: "1 Samuel 12:22", text: "The Lord will not abandon his people, because that would dishonor his great name." },
+  { ref: "2 Samuel 22:31", text: "God’s way is perfect. All the Lord’s promises prove true." },
+  { ref: "1 Kings 19:12", text: "After the fire there was the sound of a gentle whisper." },
+  { ref: "2 Kings 6:16", text: "‘Don’t be afraid!’ Elisha told him. ‘For there are more on our side than on theirs!’" },
+
+  { ref: "1 Chronicles 28:20", text: "Be strong and courageous, and do the work. Don’t be afraid or discouraged, for the Lord God is with you." },
+  { ref: "2 Chronicles 20:15", text: "The battle is not yours, but God’s." },
+  { ref: "Ezra 10:4", text: "Get up, for it is your duty to tell us how to proceed and to set things straight." },
+  { ref: "Nehemiah 1:5", text: "O Lord, God of heaven, the great and awesome God who keeps his covenant of unfailing love." },
+
+  { ref: "Job 1:21", text: "The Lord gave me what I had, and the Lord has taken it away. Praise the name of the Lord!" },
+  { ref: "Job 23:10", text: "But he knows where I am going. And when he tests me, I will come out as pure as gold." },
+  { ref: "Job 42:2", text: "I know that you can do anything, and no one can stop you." },
+
+  { ref: "Psalm 5:12", text: "For you bless the godly, O Lord; you surround them with your shield of love." },
+  { ref: "Psalm 18:2", text: "The Lord is my rock, my fortress, and my savior." },
+  { ref: "Psalm 25:4-5", text: "Show me the right path, O Lord; point out the road for me to follow." },
+  { ref: "Psalm 30:5", text: "Weeping may last through the night, but joy comes with the morning." },
+  { ref: "Psalm 62:1", text: "I wait quietly before God, for my victory comes from him." },
+  { ref: "Psalm 84:11", text: "The Lord will withhold no good thing from those who do what is right." },
+  { ref: "Psalm 112:7", text: "They do not fear bad news; they confidently trust the Lord to care for them." },
+  { ref: "Psalm 119:11", text: "I have hidden your word in my heart, that I might not sin against you." },
+  { ref: "Psalm 121:7", text: "The Lord keeps you from all harm and watches over your life." },
+
+  { ref: "Proverbs 3:24", text: "You can go to bed without fear; you will lie down and sleep soundly." },
+  { ref: "Proverbs 11:25", text: "The generous will prosper; those who refresh others will themselves be refreshed." },
+  { ref: "Proverbs 18:21", text: "The tongue can bring death or life." },
+  { ref: "Proverbs 29:25", text: "Fearing people is a dangerous trap, but trusting the Lord means safety." },
+
+  { ref: "Ecclesiastes 7:14", text: "Enjoy prosperity while you can, but when hard times strike, realize that both come from God." },
+
+  { ref: "Isaiah 26:4", text: "Trust in the Lord always, for the Lord God is the eternal Rock." },
+  { ref: "Isaiah 30:21", text: "Your own ears will hear him. Right behind you a voice will say, 'This is the way you should go.'" },
+  { ref: "Isaiah 32:17", text: "And this righteousness will bring peace. Yes, it will bring quietness and confidence forever." },
+  { ref: "Isaiah 46:4", text: "I will be your God throughout your lifetime… I will carry you along and save you." },
+
+  { ref: "Jeremiah 32:27", text: "I am the Lord, the God of all the peoples of the world. Is anything too hard for me?" },
+  { ref: "Jeremiah 17:14", text: "O Lord, if you heal me, I will be truly healed; if you save me, I will be truly saved." },
+
+  { ref: "Ezekiel 36:26", text: "I will give you a new heart, and I will put a new spirit in you." },
+  { ref: "Daniel 3:17", text: "If we are thrown into the blazing furnace, the God whom we serve is able to save us." },
+  { ref: "Daniel 12:3", text: "Those who lead many to righteousness will shine like the stars forever." },
+
+  { ref: "Hosea 14:4", text: "The Lord says, 'My love will know no bounds, for my anger will be gone forever!'" },
+
+  { ref: "Matthew 4:19", text: "‘Come, follow me, and I will show you how to fish for people!’" },
+  { ref: "Matthew 17:20", text: "If you had faith even as small as a mustard seed… nothing would be impossible." },
+  { ref: "Matthew 19:26", text: "With God everything is possible." },
+  { ref: "Mark 9:23", text: "Anything is possible if a person believes." },
+  { ref: "Mark 11:24", text: "You can pray for anything, and if you believe that you’ve received it, it will be yours." },
+
+  { ref: "Luke 6:31", text: "Do to others as you would like them to do to you." },
+  { ref: "Luke 11:28", text: "God blesses all who hear the word of God and carefully obey it." },
+
+  { ref: "John 1:12", text: "But to all who believed him… he gave the right to become children of God." },
+  { ref: "John 6:35", text: "Jesus replied, 'I am the bread of life.'" },
+  { ref: "John 8:36", text: "So if the Son sets you free, you are truly free." },
+  { ref: "John 15:7", text: "If you remain in me… you may ask for anything you want, and it will be granted!" },
+
+  { ref: "Acts 1:8", text: "You will receive power when the Holy Spirit comes upon you." },
+  { ref: "Acts 2:21", text: "Everyone who calls on the name of the Lord will be saved." },
+  { ref: "Acts 17:28", text: "For in him we live and move and exist." },
+
+  { ref: "Romans 3:24", text: "Yet God freely and graciously declares that we are righteous." },
+  { ref: "Romans 8:32", text: "Since he did not spare even his own Son… won’t he also give us everything else?" },
+  { ref: "Romans 14:8", text: "If we live, it’s to honor the Lord. And if we die, it’s to honor the Lord." },
+
+  { ref: "1 Corinthians 2:9", text: "No eye has seen, no ear has heard… what God has prepared for those who love him." },
+  { ref: "1 Corinthians 3:16", text: "You are God’s temple, and the Spirit of God lives in you." },
+  { ref: "1 Corinthians 16:14", text: "Let everything you do be done in love." },
+
+  { ref: "2 Corinthians 4:18", text: "The things we see now will soon be gone, but the things we cannot see will last forever." },
+  { ref: "2 Corinthians 3:17", text: "Wherever the Spirit of the Lord is, there is freedom." },
+
+  { ref: "Galatians 5:1", text: "So Christ has truly set us free." },
+  { ref: "Galatians 5:14", text: "For the whole law can be summed up in this one command: 'Love your neighbor as yourself.'" },
+
+  { ref: "Ephesians 1:7", text: "He is so rich in kindness and grace that he purchased our freedom with the blood of his Son." },
+  { ref: "Ephesians 4:1", text: "Lead a life worthy of your calling." },
+
+  { ref: "Philippians 2:3", text: "Don’t be selfish; don’t try to impress others. Be humble." },
+  { ref: "Philippians 3:14", text: "I press on to reach the end of the race." },
+
+  { ref: "Colossians 2:10", text: "So you also are complete through your union with Christ." },
+
+  { ref: "1 Thessalonians 4:11", text: "Make it your goal to live a quiet life." },
+  { ref: "1 Thessalonians 5:11", text: "Encourage each other and build each other up." },
+
+  { ref: "2 Thessalonians 3:5", text: "May the Lord lead your hearts into a full understanding of the love of God." },
+
+  { ref: "1 Timothy 4:12", text: "Don’t let anyone think less of you because you are young." },
+  { ref: "2 Timothy 2:13", text: "If we are unfaithful, he remains faithful." },
+
+  { ref: "Titus 3:5", text: "He saved us, not because of the righteous things we had done, but because of his mercy." },
+
+  { ref: "Hebrews 2:18", text: "Since he himself has gone through suffering and testing, he is able to help us." },
+  { ref: "Hebrews 13:5", text: "I will never fail you. I will never abandon you." },
+
+  { ref: "James 4:8", text: "Come close to God, and God will come close to you." },
+
+  { ref: "1 Peter 1:3", text: "Now we live with great expectation." },
+  { ref: "1 Peter 5:10", text: "After you have suffered a little while, he will restore, support, and strengthen you." },
+
+  { ref: "2 Peter 1:3", text: "God has given us everything we need for living a godly life." },
+
+  { ref: "1 John 2:1", text: "We have an advocate who pleads our case before the Father." },
+  { ref: "1 John 3:1", text: "See how very much our Father loves us." },
+
+  { ref: "Jude 1:21", text: "Live in the light of God’s love, waiting for the mercy of our Lord Jesus Christ." },
+
+  { ref: "Revelation 2:10", text: "Be faithful even when facing death, and I will give you the crown of life." },
+  { ref: "Revelation 21:7", text: "All who are victorious will inherit all these blessings." }
 ];
