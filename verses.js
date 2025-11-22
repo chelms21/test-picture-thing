@@ -1,4 +1,4 @@
-export const VERSES = [
+const VERSES = [
   { ref: "Genesis 1:1", text: "In the beginning God created the heavens and the earth." },
   { ref: "Exodus 14:14", text: "The Lord himself will fight for you. Just stay calm." },
   { ref: "Deuteronomy 31:6", text: "So be strong and courageous! Do not be afraid and do not panic before them. For the Lord your God will personally go ahead of you." },
