@@ -16,7 +16,13 @@
       color: #222;
       text-align: center;
       padding: 1em;
-      transition: background 1s ease;
+      /* Smooth fade effect when changing images */
+      transition: background-image 1s ease-in-out; 
+      /* Cover the whole viewport without stretching */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
     }
 
     h1 {
@@ -28,10 +34,14 @@
 
     #verse-container {
       max-width: 700px;
-      background: rgba(255, 255, 255, 0.85);
+      /* Fallback background color if image fails to load */
+      background: rgba(255, 255, 255, 0.85); 
+      /* Backdrop filter adds a sleek frosted glass effect over photos */
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
       padding: 25px 35px;
       border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
       margin-bottom: 20px;
       text-align: center;
     }
@@ -40,12 +50,14 @@
       font-size: 1.5rem;
       line-height: 1.6;
       margin-bottom: 15px;
+      font-weight: 500;
     }
 
     #reference {
       font-style: italic;
-      color: #333;
+      color: #444;
       font-size: 1.1rem;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -57,21 +69,25 @@
 
   <script src="verses.js"></script>
   <script>
-    // Generate random hex color
-    function getRandomColor() {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
-    }
+    // Array of curated scenery keywords or direct image URLs
+    const sceneryKeywords = [
+      'nature', 'mountains', 'forest', 'ocean', 'sunset', 
+      'stars', 'hills', 'river', 'sky', 'desert'
+    ];
 
-    // Set random background gradient
-    function setRandomGradient() {
-      const color1 = getRandomColor();
-      const color2 = getRandomColor();
-      document.body.style.background = `linear-gradient(135deg, ${color1}, ${color2})`;
+    // Set a random scenery background photo
+    function setRandomScenery() {
+      // Pick a random keyword from the array
+      const randomKeyword = sceneryKeywords[Math.floor(Math.random() * sceneryKeywords.length)];
+      
+      // Generate a random seed number so Unsplash forces a fresh image pull on reload
+      const randomSeed = Math.floor(Math.random() * 1000);
+      
+      // Unsplash Source URL using modern optimized dimensions (1600x900)
+      const imageUrl = `https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&w=1600&q=80&sig=${randomSeed}&q=${randomKeyword}`;
+      
+      // Apply image with a subtle dark overlay layer to make sure text remains legible
+      document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url('${imageUrl}')`;
     }
 
     // Show random verse immediately
@@ -86,10 +102,9 @@
     }
 
     window.onload = function() {
-      setRandomGradient();
+      setRandomScenery();
       showVerse();
     };
   </script>
 </body>
 </html>
-
