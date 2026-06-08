@@ -16,13 +16,46 @@
       color: #222;
       text-align: center;
       padding: 1em;
-      /* Smooth fade effect when changing images */
-      transition: background-image 1s ease-in-out; 
-      /* Cover the whole viewport without stretching */
+      /* Soft fallback color while the very first image loads */
+      background-color: #1a2a3a; 
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* This hidden layer handles the fast background image rendering */
+    body::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
       background-attachment: fixed;
+      opacity: 0;
+      /* Faster 0.4s transition so it snaps in cleanly once downloaded */
+      transition: opacity 0.4s ease-in-out; 
+    }
+
+    /* Class injected by JS once the image finishes downloading */
+    body.bg-loaded::after {
+      opacity: 1;
+    }
+
+    #verse-container {
+      max-width: 700px;
+      background: rgba(255, 255, 255, 0.88); 
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 25px 35px;
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      margin-bottom: 20px;
+      text-align: center;
+      z-index: 1; /* Ensures text stays above the pseudo-element background */
     }
 
     h1 {
@@ -30,20 +63,6 @@
       margin-bottom: 1rem;
       color: #1a3c7a;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-    }
-
-    #verse-container {
-      max-width: 700px;
-      /* Fallback background color if image fails to load */
-      background: rgba(255, 255, 255, 0.85); 
-      /* Backdrop filter adds a sleek frosted glass effect over photos */
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      padding: 25px 35px;
-      border-radius: 15px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-      margin-bottom: 20px;
-      text-align: center;
     }
 
     #verse {
@@ -69,80 +88,89 @@
 
   <script src="verses.js"></script>
   <script>
-    // List of natural fallback scenery keywords if no contextual matches are found
     const defaultScenery = ['nature', 'mountains', 'forest', 'sunset', 'sky', 'hills'];
 
-    // Map specific textual words directly to visual scenic themes
     const themeKeywords = {
-      light: 'sunlight,sunrays',
-      dark: 'night,stars',
-      afraid: 'peaceful,calm',
-      courageous: 'mountain,peak',
-      shepherd: 'meadow,sheep',
-      refuge: 'fortress,rock',
-      earth: 'planet,space',
-      heavens: 'galaxy,sky',
-      sea: 'ocean,waves',
-      water: 'river,lake',
-      young: 'path,trees',
-      heart: 'sunrise,morning'
+      light: 'sunlight',
+      dark: 'stars',
+      afraid: 'calm',
+      courageous: 'mountain',
+      shepherd: 'meadow',
+      refuge: 'rock',
+      earth: 'space',
+      heavens: 'sky',
+      sea: 'ocean',
+      water: 'river',
+      young: 'path',
+      heart: 'sunrise'
     };
 
     function setContextualBackground(verseObject) {
       let selectedTag = "";
 
-      // 1. First priority: Check if the verse array has explicit predefined tags
+      // 1. Check custom tags
       if (verseObject.tags) {
         const tagsArray = verseObject.tags.split(',');
-        selectedTag = tagsArray[Math.floor(Math.random() * tagsArray.length)];
+        selectedTag = tagsArray[Math.floor(Math.random() * tagsArray.length)].trim();
       } 
       
-      // 2. Second priority: Scan the text dynamically for matched themes
+      // 2. Check keyword fallback map
       if (!selectedTag) {
         const lowerText = verseObject.text.toLowerCase();
         for (const [key, value] of Object.entries(themeKeywords)) {
           if (lowerText.includes(key)) {
-            const options = value.split(',');
-            selectedTag = options[Math.floor(Math.random() * options.length)];
-            break; // Grab the first strong match found
+            selectedTag = value;
+            break;
           }
         }
       }
 
-      // 3. Third priority: Fallback to general nature imagery if no context triggers match
+      // 3. Fallback to default scenery
       if (!selectedTag) {
         selectedTag = defaultScenery[Math.floor(Math.random() * defaultScenery.length)];
       }
 
-      // Generate a cache-buster seed so consecutive reloads with same keyword pull new views
-      const randomSeed = Math.floor(Math.random() * 10000);
+      const randomSeed = Math.floor(Math.random() * 1000);
       
-      // Request an high-resolution thematic image matching the verse tag
-      const imageUrl = `https://loremflickr.com/1600/900/${selectedTag}?random=${randomSeed}`;
+      // Speed Optimization: Lower resolution to 1200x800 & force optimized client compressed sizing
+      // This slashes the network payload footprint to a fraction of its original size
+      const imageUrl = `https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&h=800&q=70&sig=${randomSeed}&q=${selectedTag}`;
 
-      // Create a smooth transition overlay pre-load sequence
-      const img = new Image();
-      img.src = imageUrl;
-      img.onload = function() {
-        document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('${imageUrl}')`;
+      // Remove the old loaded state class so it can fade cleanly again
+      document.body.classList.remove('bg-loaded');
+
+      // Create an in-memory image object to preload the asset completely before showing it
+      const imgPreloader = new Image();
+      imgPreloader.src = imageUrl;
+
+      imgPreloader.onload = function() {
+        // Find or create a dynamic style block to update our CSS pseudo-element rule safely
+        let bgStyle = document.getElementById('dynamic-bg-style');
+        if (!bgStyle) {
+          bgStyle = document.createElement('style');
+          bgStyle.id = 'dynamic-bg-style';
+          document.head.appendChild(bgStyle);
+        }
+        
+        // Inject the preloaded source URL with its text-protection dark overlay layout
+        bgStyle.innerHTML = `body::after { background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('${imageUrl}'); }`;
+        
+        // Add class to trigger the smooth, hardware-accelerated CSS opacity fade-in instantly
+        document.body.classList.add('bg-loaded');
       };
     }
 
-    // Refactored to coordinate the verse selection and background assignment together
     function showVerseAndBackground() {
       if (!VERSES || VERSES.length === 0) {
         document.getElementById("verse").innerText = "No verses loaded.";
         return;
       }
       
-      // Pick the random verse first
       const randomVerse = VERSES[Math.floor(Math.random() * VERSES.length)];
       
-      // Display the content text
       document.getElementById("verse").innerText = randomVerse.text;
       document.getElementById("reference").innerText = randomVerse.ref;
       
-      // Fire the background fetch utilizing the chosen verse object's data
       setContextualBackground(randomVerse);
     }
 
