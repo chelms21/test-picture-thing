@@ -69,52 +69,85 @@
 
   <script src="verses.js"></script>
   <script>
-    // Array of curated scenery keywords or direct image URLs
-    const sceneryKeywords = [
-      'nature', 'mountains', 'forest', 'ocean', 'sunset', 
-      'stars', 'hills', 'river', 'sky', 'desert'
-    ];
+    // List of natural fallback scenery keywords if no contextual matches are found
+    const defaultScenery = ['nature', 'mountains', 'forest', 'sunset', 'sky', 'hills'];
 
-    // Set a random scenery background photo via Lorem Picsum (sourced from Unsplash)
-    function setRandomScenery() {
-      // Generate a random ID number to pull a distinct image from the platform catalog
-      const randomImageId = Math.floor(Math.random() * 1000);
+    // Map specific textual words directly to visual scenic themes
+    const themeKeywords = {
+      light: 'sunlight,sunrays',
+      dark: 'night,stars',
+      afraid: 'peaceful,calm',
+      courageous: 'mountain,peak',
+      shepherd: 'meadow,sheep',
+      refuge: 'fortress,rock',
+      earth: 'planet,space',
+      heavens: 'galaxy,sky',
+      sea: 'ocean,waves',
+      water: 'river,lake',
+      young: 'path,trees',
+      heart: 'sunrise,morning'
+    };
+
+    function setContextualBackground(verseObject) {
+      let selectedTag = "";
+
+      // 1. First priority: Check if the verse array has explicit predefined tags
+      if (verseObject.tags) {
+        const tagsArray = verseObject.tags.split(',');
+        selectedTag = tagsArray[Math.floor(Math.random() * tagsArray.length)];
+      } 
       
-      // Request an optimized high-definition landscape image (1600x900)
-      const imageUrl = `https://picsum.photos/id/${randomImageId}/1600/900`;
+      // 2. Second priority: Scan the text dynamically for matched themes
+      if (!selectedTag) {
+        const lowerText = verseObject.text.toLowerCase();
+        for (const [key, value] of Object.entries(themeKeywords)) {
+          if (lowerText.includes(key)) {
+            const options = value.split(',');
+            selectedTag = options[Math.floor(Math.random() * options.length)];
+            break; // Grab the first strong match found
+          }
+        }
+      }
+
+      // 3. Third priority: Fallback to general nature imagery if no context triggers match
+      if (!selectedTag) {
+        selectedTag = defaultScenery[Math.floor(Math.random() * defaultScenery.length)];
+      }
+
+      // Generate a cache-buster seed so consecutive reloads with same keyword pull new views
+      const randomSeed = Math.floor(Math.random() * 10000);
       
-      // Create a temporary image object to verify the photo exists and loads correctly 
-      // before attempting to render it as the background
+      // Request an high-resolution thematic image matching the verse tag
+      const imageUrl = `https://loremflickr.com/1600/900/${selectedTag}?random=${randomSeed}`;
+
+      // Create a smooth transition overlay pre-load sequence
       const img = new Image();
       img.src = imageUrl;
-      
       img.onload = function() {
-        // Apply image with a subtle dark overlay layer to keep text legible once loaded
         document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('${imageUrl}')`;
-      };
-      
-      img.onerror = function() {
-        // Fallback: If the randomized ID hits a blank spot in their catalog, 
-        // fall back to their general curated random endpoint instead
-        const fallbackUrl = `https://picsum.photos/1600/900?random=${Math.random()}`;
-        document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('${fallbackUrl}')`;
       };
     }
 
-    // Show random verse immediately
-    function showVerse() {
+    // Refactored to coordinate the verse selection and background assignment together
+    function showVerseAndBackground() {
       if (!VERSES || VERSES.length === 0) {
         document.getElementById("verse").innerText = "No verses loaded.";
         return;
       }
-      const random = VERSES[Math.floor(Math.random() * VERSES.length)];
-      document.getElementById("verse").innerText = random.text;
-      document.getElementById("reference").innerText = random.ref;
+      
+      // Pick the random verse first
+      const randomVerse = VERSES[Math.floor(Math.random() * VERSES.length)];
+      
+      // Display the content text
+      document.getElementById("verse").innerText = randomVerse.text;
+      document.getElementById("reference").innerText = randomVerse.ref;
+      
+      // Fire the background fetch utilizing the chosen verse object's data
+      setContextualBackground(randomVerse);
     }
 
     window.onload = function() {
-      setRandomScenery();
-      showVerse();
+      showVerseAndBackground();
     };
   </script>
 </body>
