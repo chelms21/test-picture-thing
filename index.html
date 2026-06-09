@@ -130,11 +130,11 @@
         selectedTag = defaultScenery[Math.floor(Math.random() * defaultScenery.length)];
       }
 
-      const randomSeed = Math.floor(Math.random() * 1000);
+      // Generate a truly random cache-buster string using time and random numbers
+      const cacheBuster = Date.now() + Math.floor(Math.random() * 1000);
       
-      // Speed Optimization: Lower resolution to 1200x800 & force optimized client compressed sizing
-      // This slashes the network payload footprint to a fraction of its original size
-      const imageUrl = `https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&h=800&q=70&sig=${randomSeed}&q=${selectedTag}`;
+      // Highly optimized, random contextual URL via Lorem Picsum
+      const imageUrl = `https://picsum.photos/1200/800?${selectedTag}&blur=1&random=${cacheBuster}`;
 
       // Remove the old loaded state class so it can fade cleanly again
       document.body.classList.remove('bg-loaded');
@@ -153,9 +153,9 @@
         }
         
         // Inject the preloaded source URL with its text-protection dark overlay layout
-        bgStyle.innerHTML = `body::after { background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('${imageUrl}'); }`;
+        bgStyle.innerHTML = `body::after { background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('${imageUrl}'); }`;
         
-        // Add class to trigger the smooth, hardware-accelerated CSS opacity fade-in instantly
+        // Add class to trigger the smooth CSS opacity fade-in instantly
         document.body.classList.add('bg-loaded');
       };
     }
